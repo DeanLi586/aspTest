@@ -6,7 +6,7 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm("Upload")) 
+@using (Html.BeginForm("Upload", "Products", FormMethod.Post, new {@enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -43,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Image, htmlAttributes: new {@class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" value="Image file" />
+                <input type="file" value="Image file" id="ImageUrl" name="ImageUrl"/>
             </div>
         </div>
 
@@ -55,6 +55,7 @@
     </div>
 }
 
-<div>
+<div class="btn btn-primary">
+    <span><i class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></i></span>
     @Html.ActionLink("Back to List", "Index")
 </div>

@@ -7,7 +7,10 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <div class="btn btn-primary">
+        <span><i class="glyphicon glyphicon-new-window" aria-hidden="true"></i></span>
+        @Html.ActionLink("Create New", "Create")
+    </div>
 </p>
 <table class="table">
     <tr>
@@ -28,11 +31,26 @@
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductId })
-        </td>
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (User.IsInRole("Manager"))
+            {
+               <td>
+                <div class="btn btn-primary">
+                    <span><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></span>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) 
+                </div>
+                <div class="btn btn-default">
+                    <span><i class="glyphicon glyphicon-info-sign" aria-hidden="true"></i></span>
+                    @Html.ActionLink("Details", "Details", new { id = item.ProductId })
+                </div>
+                <div class="btn btn-danger">
+                    <span><i class="glyphicon glyphicon-trash" aria-hidden="true"></i></span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+                </div>
+            </td>
+            }
+        }
     </tr>
 }
 

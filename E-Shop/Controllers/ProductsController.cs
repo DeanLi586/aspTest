@@ -132,18 +132,18 @@ namespace E_Shop.Controllers
 
                 FileInfo fl = new FileInfo(fileBase.FileName);
 
+                if (ModelState.IsValid)
+                {
+                    db.Products.Add(product);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
                 return View();
             }catch(Exception ex)
             {
                 ViewBag.Msg = "An error occured";
                 return View();
-            }
-
-            if (ModelState.IsValid)
-            {
-                db.Products.Add(product);
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
         }
 
