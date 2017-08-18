@@ -51,7 +51,11 @@ namespace E_Shop.Controllers
         public ActionResult Create(Product product)
         {
             if (ModelState.IsValid)
-            {
+            { 
+                HttpPostedFileBase fileBase = Request.Files[0];
+                string fName = "C:/Users/Dean/documents/visual studio 2015/Projects/E-Shop/E-Shop/Content/Products/"+fileBase.FileName;
+                fileBase.SaveAs(fName);
+                product.Image = fileBase?.FileName;
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -121,31 +125,31 @@ namespace E_Shop.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles ="Manager")]
-        public ActionResult Upload(FormCollection col, Product product)
-        {
-            try
-            { 
-                HttpPostedFileBase fileBase = Request.Files[0];
+        //[Authorize(Roles ="Manager")]
+        //public ActionResult Upload(FormCollection col, Product product)
+        //{
+        //    try
+        //    { 
+        //        HttpPostedFileBase fileBase = Request.Files[0];
 
-                string fName = Path.GetFullPath(fileBase.FileName);
+        //        string fName = Path.GetFullPath(fileBase.FileName);
 
-                FileInfo fl = new FileInfo(fileBase.FileName);
+        //        FileInfo fl = new FileInfo(fileBase.FileName);
 
-                if (ModelState.IsValid)
-                {
-                    db.Products.Add(product);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+        //        if (ModelState.IsValid)
+        //        {
+        //            db.Products.Add(product);
+        //            db.SaveChanges();
+        //            return RedirectToAction("Index");
+        //        }
 
-                return View();
-            }catch(Exception ex)
-            {
-                ViewBag.Msg = "An error occured";
-                return View();
-            }
-        }
+        //        return View();
+        //    }catch(Exception ex)
+        //    {
+        //        ViewBag.Msg = "An error occured";
+        //        return View();
+        //    }
+        //}
 
         protected override void Dispose(bool disposing)
         {

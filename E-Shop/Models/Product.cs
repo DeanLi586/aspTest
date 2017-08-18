@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using E_Shop.Models;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_Shop.Models
 {
@@ -15,6 +16,7 @@ namespace E_Shop.Models
         [Display(AutoGenerateField =true)]
         public int ProductId { get; set; }
 
+        [Required]
         [DisplayName("Category")]
         public int CategoryId { get; set; }
 
@@ -24,14 +26,14 @@ namespace E_Shop.Models
 
         [Required]
         [Range(0.01, 1000, ErrorMessage ="Price Must Be Between 0.01 & 1000")]
-        [DataType(DataType.Currency)]
+        [DataType(DataType.Currency, ErrorMessage ="The Entered Value Should be a number")]
         public decimal Price { get; set; }
 
         [DataType(DataType.ImageUrl)]
         [DisplayName("Image")]
         public string Image { get; set; }
 
-        [Required]
+        [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
     }
 }
